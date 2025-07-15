@@ -185,19 +185,3 @@ This project is licensed under the **MIT License**.
 
 ````
 
----
-
-### ✅ **Instructions**
-
-1. **Replace `your_video_id`** with your actual YouTube demo ID.
-2. Save as `README.md` in your root directory.
-3. Commit and push:
-
-```bash
-git add README.md
-git commit -m "Add final README.md with setup and design details"
-git push origin main
-````
-
----
-
