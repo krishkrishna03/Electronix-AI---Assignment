@@ -19,9 +19,10 @@ interface PredictVars {
 
 // Apollo Client setup
 const client = new ApolloClient({
-  uri: 'http://localhost:8000/graphql',
+  uri: 'https://electronix-ai-assignment-201h.onrender.com/graphql',
   cache: new InMemoryCache(),
 });
+
 
 // GraphQL query
 const PREDICT_QUERY = gql`
