@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+transformers
+torch
+datasets
+strawberry-graphql[fastapi]
+pydantic
+aiofiles
+watchdog
+python-multipart
+fastapi-pagination
