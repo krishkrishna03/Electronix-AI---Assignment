@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './App.css';
-import { ApolloClient, InMemoryCache, ApolloProvider, gql, useLazyQuery } from '@apollo/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Form, Button, Spinner, Card } from 'react-bootstrap';
 
@@ -9,38 +8,27 @@ interface Prediction {
   score: number;
 }
 
-interface PredictData {
-  predict: Prediction;
-}
-
-interface PredictVars {
-  text: string;
-}
-
-// Apollo Client setup
-const client = new ApolloClient({
-  uri: 'https://electronix-ai-assignment-201h.onrender.com/graphql',
-  cache: new InMemoryCache(),
-});
-
-
-// GraphQL query
-const PREDICT_QUERY = gql`
-  query Predict($text: String!) {
-    predict(text: $text) {
-      label
-      score
-    }
-  }
-`;
-
 function Sentiment() {
   const [input, setInput] = useState<string>('');
-  const [getPrediction, { loading, data }] = useLazyQuery<PredictData, PredictVars>(PREDICT_QUERY);
+  const [prediction, setPrediction] = useState<Prediction | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const handlePredict = () => {
+  const handlePredict = async () => {
     if (input.trim() !== "") {
-      getPrediction({ variables: { text: input } });
+      setLoading(true);
+      try {
+        const response = await fetch('https://sriKrishnasaipatnala-sentiment-fastapi.hf.space/predict', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text: input })
+        });
+        const data = await response.json();
+        setPrediction({ label: data.label, score: data.score });
+      } catch (error) {
+        console.error("Error:", error);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -67,12 +55,12 @@ function Sentiment() {
               </Button>
             </div>
 
-            {data && (
+            {prediction && (
               <Card className="mt-4 shadow-sm result-card">
                 <Card.Body>
                   <h5 className="mb-2">Prediction Result</h5>
-                  <p><strong>Label:</strong> {data.predict.label}</p>
-                  <p><strong>Score:</strong> {data.predict.score.toFixed(2)}</p>
+                  <p><strong>Label:</strong> {prediction.label}</p>
+                  <p><strong>Score:</strong> {prediction.score.toFixed(2)}</p>
                 </Card.Body>
               </Card>
             )}
@@ -83,12 +71,4 @@ function Sentiment() {
   );
 }
 
-function App() {
-  return (
-    <ApolloProvider client={client}>
-      <Sentiment />
-    </ApolloProvider>
-  );
-}
-
-export default App;
+export default Sentiment;
