@@ -3,6 +3,21 @@ body {
   margin: 0;
   padding: 0;
 }
+.gradient-text {
+  background: linear-gradient(45deg, #007bff, #00c6ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+}
+
+.btn-gradient {
+  background: linear-gradient(45deg, #007bff, #00c6ff);
+  border: none;
+}
+
+.btn-gradient:hover {
+  background: linear-gradient(45deg, #00c6ff, #007bff);
+}
 
 
 
