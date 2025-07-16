@@ -140,7 +140,7 @@ python finetune.py -data data.jsonl -epochs 3 -lr 3e-5
 ## 📸 **7. Demo Recording**
 
 🎥 **Watch the demo video here:**
-➡️ [Demo Video Link](https://www.youtube.com/watch?v=your_video_id)
+➡️ [Demo Video Link](https://electronix-ai-assignment-98aa.vercel.app/)
 
 *(Replace with your actual unlisted YouTube video URL)*
 
